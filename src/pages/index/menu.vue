@@ -104,9 +104,10 @@
 
 	// ======================  钩子 ========================
 	onReady(async () => {
-		const result = await request.get('/api/package/menu')
+		const result = await request.get('/package/menu')
 		menuList.value = result.data.categoryList
 		packageList.value = result.data.packageList
+		console.log(result)
 	})
 </script>
 

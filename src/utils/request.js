@@ -1,4 +1,4 @@
-// const BASE_URL = "http://localhost:8080"
+const BASE_URL = "/api"
 const send = (url, method = 'POST', data = {}, showLoading = true) => {
 	uni.showLoading({
 		title: '加载中'
@@ -6,7 +6,7 @@ const send = (url, method = 'POST', data = {}, showLoading = true) => {
 	return new Promise((resolve) => {
 		uni.request({
 			method: method,
-			url: url,
+			url: '/api' + url,
 			data: data,
 			header: (() => {
 				// todo 加载 token
