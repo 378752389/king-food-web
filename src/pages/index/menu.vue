@@ -111,7 +111,7 @@
 </script>
 
 <template>
-	<view>
+	<view style="width: 100vw; height: 100vh;">
 		<view class="advertise-list">
 			<swiper circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
 				<swiper-item class="advertise-item" v-for="advertise in advertiseList">
@@ -177,7 +177,8 @@
 
 		position: sticky;
 		top: 388rpx;
-		height: 1080rpx;
+		// height: 1080rpx;
+		height: calc(100% - 88rpx - 60rpx - 100rpx);
 
 		display: flex;
 		justify-content: space-between;
