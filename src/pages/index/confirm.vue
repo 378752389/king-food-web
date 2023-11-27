@@ -15,8 +15,8 @@
 								<view class="subtitle">店内就餐</view>
 							</view>
 						</view>
-				
-						<view @tap="onTapMeal(2)" :class="['meal-way-item', {active: mealWay === 2}]">
+
+						<view :class="['meal-way-item', 'disable', {active: mealWay === 2}]">
 							<image class="meal-way-pic" src="/static/logo.png"></image>
 							<view>
 								<view>外卖</view>
@@ -25,7 +25,7 @@
 						</view>
 					</view>
 				</view>
-				
+
 			</uni-section>
 		</uni-card>
 
@@ -92,6 +92,16 @@
 				</uni-list-item>
 			</uni-list>
 		</uni-card>
+		
+		<!-- todo 填充盒子，填充确认订单按钮的高度 -->
+		<view style="height: 100rpx;"></view>
+
+		<view class="sumary">
+			<view class="amount">
+				合计: ￥{{99.99}}
+			</view>
+			<view class="order-btn">提交订单</view>
+		</view>
 	</view>
 </template>
 
@@ -109,11 +119,12 @@
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 30rpx;
-		
+
 		.name {
 			font-size: 1.4rem;
 		}
 	}
+
 	.meal-way {
 		display: flex;
 		justify-content: space-around;
@@ -141,6 +152,10 @@
 					right: 0;
 					top: 0;
 				}
+			}
+
+			&.disable {
+				opacity: 0.4;
 			}
 
 
@@ -173,5 +188,33 @@
 				font-size: 0.8rem;
 			}
 		}
+	}
+
+	.sumary {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		position: fixed;
+		bottom: 0;
+		background-color: white;
+		
+		
+		.amount {
+			margin-right: 30rpx;
+			line-height: 100rpx;
+		}
+		
+		.order-btn {
+			margin-right: 30rpx;
+			background-color: red;
+			border-radius: 10rpx;
+			text-align: center;
+			line-height: 100rpx;
+			color: white;
+			width: 200rpx;
+			height: 100rpx;
+		}
+
+		
 	}
 </style>
