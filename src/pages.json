@@ -25,9 +25,24 @@
     {
       "path": "pages/index/menu",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "菜单",
         "enablePullDownRefresh": true
       }
+    },
+		{
+		  "path": "pages/index/confirm",
+		  "style": {
+		    "navigationBarTitleText": "确认订单",
+		    "enablePullDownRefresh": false
+		  }
+		},
+    {
+    	"path" : "pages/shop/shop",
+    	"style" : 
+    	{
+    		"navigationBarTitleText" : "商家",
+    		"enablePullDownRefresh" : false
+    	}
     }
   ],
   "tabBar": {
@@ -42,6 +57,10 @@
         //			"selectedIconPath": "static/image/icon_component_HL.png",
         "text": "菜单"
       },
+			{
+			  "pagePath": "pages/shop/shop",
+			  "text": "商家"
+			},
       {
         "pagePath": "pages/vip/vip",
         "text": "会员"

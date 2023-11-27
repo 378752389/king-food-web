@@ -11,7 +11,7 @@ const send = (url, method = 'POST', data = {}, showLoading = true) => {
 			header: (() => {
 				// todo 加载 token
 				const headers = {
-					'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJyb2xlIjoicm9sZSIsImNyZWF0ZVRpbWUiOjE3MDA3OTk0MTI4MDMsInN1YiI6ImFkbWluIiwiaXNzIjoia2luZy1mb29kLWFkbWluIiwiYXVkIjoia2luZy1mb29kLWFkbWluIiwiZXhwIjoxNzAwODAyNDEyLCJuYmYiOjE3MDA3OTk0MTJ9.Pc0Z-O2SvogcS_AD44YZVcvcL2-bWHV0g_9BZl5KT3g',
+					// 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJyb2xlIjoicm9sZSIsImNyZWF0ZVRpbWUiOjE3MDA3OTk0MTI4MDMsInN1YiI6ImFkbWluIiwiaXNzIjoia2luZy1mb29kLWFkbWluIiwiYXVkIjoia2luZy1mb29kLWFkbWluIiwiZXhwIjoxNzAwODAyNDEyLCJuYmYiOjE3MDA3OTk0MTJ9.Pc0Z-O2SvogcS_AD44YZVcvcL2-bWHV0g_9BZl5KT3g',
 					// 'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Type': 'application/json'
 				}

@@ -2,9 +2,17 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
-			<button size="default" type="default" @click="jumpMenu"
-				style="color:#ffffff; background-color:#1AAD19; border-color:#1AAD19" hover-class="is-hover">按钮
-			</button>
+			<navigator url="/pages/index/menu">
+				<button size="default" type="default" style="color:#ffffff; background-color:#1AAD19; border-color:#1AAD19"
+					hover-class="is-hover">菜单
+				</button>
+			</navigator>
+
+			<navigator url="/pages/index/confirm">
+				<button size="default" type="default" style="color:#ffffff; background-color:#1AAD19; border-color:#1AAD19"
+					hover-class="is-hover">确认订单
+				</button>
+			</navigator>
 		</view>
 	</view>
 </template>
@@ -23,15 +31,6 @@
 			url: '/pages/index/menu'
 		})
 	}
-	// export default {
-	//   data() {
-	//     return {
-	//       title: 'Hello',
-	//     }
-	//   },
-	//   onLoad() {},
-	//   methods: {},
-	// }
 </script>
 
 <style>

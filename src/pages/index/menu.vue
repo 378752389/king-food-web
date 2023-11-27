@@ -123,7 +123,9 @@
 
 		<view class="main">
 			<scroll-view class="menu-list" scroll-y="true">
-				<button class="menu-item" v-for="menu in menuList" @tap="onMenuTap(menu)">{{menu.name}}</button>
+				<button class="menu-item" v-for="menu in menuList" @tap="onMenuTap(menu)">
+					<text>{{menu.name}}</text>
+				</button>
 			</scroll-view>
 
 			<scroll-view class="package-list" scroll-y="true">
@@ -189,12 +191,18 @@
 
 			.menu-item {
 				border-radius: 0;
-
 				height: 160rpx;
 				background-color: red;
 				margin: 1px 0;
-				text-align: center;
-				line-height: 160rpx;
+				display: flex;
+				justify-content: center;
+				
+				text {
+					align-self: center;
+					font-size: 1rem;
+					line-height: 1rem;
+					text-align: center;
+				}
 			}
 		}
 
