@@ -28,7 +28,7 @@
 					还有360天过期，已省100元
 				</view>
 				<view class="card-privilege">
-					<view class="privilege-item" v-for="(item, index) in 6">
+					<view class="privilege-item" :key="item" v-for="(item, index) in 6">
 						<image src="../../static/logo.png"></image>
 						<view>早餐6折</view>
 					</view>
@@ -46,7 +46,7 @@
 				</view>
 				<view class="package">
 					<view class="list">
-						<image src="../../static/logo.png" v-for="(item, index) in 2"></image>
+						<image src="../../static/logo.png" :key="item" v-for="(item, index) in 2"></image>
 					</view>
 
 					<view class="summary">

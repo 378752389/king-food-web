@@ -20,7 +20,7 @@
 				<uni-list-item>
 					<template #body>
 						<scroll-view class="shop-image-list" scroll-x="true">
-							<image src="../../static/logo.png" v-for="(item, index) in 10" />
+							<image src="../../static/logo.png" :key="item" v-for="(item, index) in 10" />
 						</scroll-view>
 					</template>
 				</uni-list-item>

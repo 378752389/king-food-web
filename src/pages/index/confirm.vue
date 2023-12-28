@@ -32,7 +32,7 @@
 		<uni-card>
 			<uni-section type="line" title="餐品详情">
 				<uni-list>
-					<uni-list-item class="package-item" v-for="(item, index) in 5">
+					<uni-list-item class="package-item" :key="item" v-for="(item, index) in 5">
 						<template #header>
 							<image class="package-pic" src="/static/logo.png"></image>
 						</template>

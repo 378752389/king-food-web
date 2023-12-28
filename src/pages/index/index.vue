@@ -23,6 +23,8 @@
 
 	const title = ref('Hello, World!')
 	onReady(() => {
+		const res = uni.getSystemInfoSync()
+		console.log(res)
 		console.log('onReady')
 	})
 
