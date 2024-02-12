@@ -59,6 +59,7 @@
 		"better-mock": "^0.3.7",
 		"less": "^4.2.0",
 		"pinia": "2.0.36",
+		"pinia-plugin-persistedstate": "^3.2.1",
 		"vue": "^3.2.45",
 		"vue-i18n": "^9.1.9"
 	},

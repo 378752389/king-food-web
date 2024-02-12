@@ -19,7 +19,7 @@
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -42,6 +42,19 @@
 				"navigationBarTitleText": "商家",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录页",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "order"
+			}
 		}
 	],
 	"tabBar": {
@@ -49,25 +62,23 @@
 		"selectedColor": "#3cc51f",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [{
+		"list": [
+			{
 				"pagePath": "pages/index/index",
-				// "iconPath": "static/logo.png",
-				"selectedIconPath": "static/logo.png",
-				"text": "菜单"
+				"iconPath": "static/navicon/home.png",
+				"selectedIconPath": "static/navicon/homefill.png",
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/shop/shop",
-				"selectedIconPath": "static/logo.png",
+				"iconPath": "static/navicon/shop.png",
+				"selectedIconPath": "static/navicon/shopfill.png",
 				"text": "商家"
 			},
 			{
-				"pagePath": "pages/vip/vip",
-				"selectedIconPath": "static/logo.png",
-				"text": "会员"
-			},
-			{
 				"pagePath": "pages/mine/mine",
-				"selectedIconPath": "static/logo.png",
+				"iconPath": "static/navicon/my.png",
+				"selectedIconPath": "static/navicon/myfill.png",
 				"text": "我的"
 			}
 		]
@@ -82,7 +93,43 @@
 		"autoscan": true,
 		"custom": {
 			// uni-ui 规则如下配置
-			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+			// 以King开头的组件，都在 components 目录下开始查找
+			"^King(.*)": "@/components/King$1.vue"
+		}
+	},
+	"subPackages": [
+		{
+			"root": "subpackages",
+			"pages": [
+				{
+					"path": "settings/settings",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				{
+					"path": "address/address",
+					"style": {
+						"navigationBarTitleText": "地址管理"
+					}
+				},
+				{
+					"path": "address/createAddress",
+					"style": {
+						"navigationBarTitleText": "添加地址"
+					}
+				}
+			]
+		}
+	],
+	// 分包预下载规则配置
+	"preloadRule": {
+		"pages/mine/mine": {
+			"network": "all",
+			"packages": [
+				"subpackages"
+			]
 		}
 	}
 }
