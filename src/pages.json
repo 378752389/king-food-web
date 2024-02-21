@@ -55,6 +55,12 @@
 			"style": {
 				"navigationBarTitleText": "order"
 			}
+		},
+		{
+			"path": "pages/menu/menu",
+			"style": {
+				"navigationBarTitleText": "菜单"
+			}
 		}
 	],
 	"tabBar": {

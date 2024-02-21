@@ -17,6 +17,21 @@
         </button>
       </navigator>
 
+      <navigator url="/pages/menu/menu">
+        <button
+          size="default"
+          type="default"
+          style="
+            color: #ffffff;
+            background-color: #1aad19;
+            border-color: #1aad19;
+          "
+          hover-class="is-hover"
+        >
+          新菜单
+        </button>
+      </navigator>
+
       <navigator url="/pages/index/confirm">
         <button
           size="default"
