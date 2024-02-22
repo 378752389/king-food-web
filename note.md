@@ -108,3 +108,6 @@ function useDouble(count) {
 
 const doubleCount = useDouble(props.count);
 ```
+
+
+uniapp 中页面传参（接收上一个页面的参数）可以通过defineProps进行接收和处理

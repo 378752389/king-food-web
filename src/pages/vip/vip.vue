@@ -1,39 +1,29 @@
 <template>
-  <button @tap="setContent">setContent</button>
-  <button @tap="getContent">getContent</button>
-  <button @tap="clearContent">clearContent</button>
+  <view class="vip">
+    you konw, for test!
 
-  <view class="uni-primary-bg" style="height: 300rpx; width: 300rpx"></view>
+    <button
+      size="default"
+      type="default"
+      style="color: #ffffff; background-color: #1aad19; border-color: #1aad19"
+      hover-class="is-hover"
+    >
+      新菜单
+    </button>
+  </view>
 </template>
 
 <script setup>
-import { onShow } from "@dcloudio/uni-app";
-import { useMemberStore } from "../../store/member.js";
-import { request } from "../../utils/http";
-
-onShow(async () => {
-  console.log(111);
-
-  let resp = await request({
-    url: "http://localhost:8080/package/menu",
-    method: "get",
-  });
-  console.log(resp);
+import { onReady } from "@dcloudio/uni-app";
+// 页面传参
+const props = defineProps({
+  name: String,
+  age: Number,
 });
 
-const memberStore = useMemberStore();
-
-const clearContent = () => {
-  memberStore.clearInfo();
-};
-
-const setContent = () => {
-  memberStore.setInfo({
-    name: "king",
-    age: 22,
-    addr: "sz",
-  });
-};
+onReady(() => {
+  console.log(props);
+});
 </script>
 
 <style scoped lang="scss"></style>

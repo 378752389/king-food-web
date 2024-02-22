@@ -1,6 +1,6 @@
 <template>
   <view class="menu">
-    <view style="height: 30vh; background-color: red;"></view>
+    <advertise-list></advertise-list>
     <main-menu></main-menu>
   </view>
 </template>
@@ -9,6 +9,7 @@
 import MainMenu from './components/MainMenu.vue';
 import {onPageScroll, onReady} from '@dcloudio/uni-app';
 import {useCartStore} from '../../store/cart';
+import AdvertiseList from '@/pages/menu/components/AdvertiseList'
 
 onPageScroll((data) => {
   uni.$emit('onPageScroll', data.scrollTop)

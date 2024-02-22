@@ -2,7 +2,22 @@
   <view class="content">
     <image class="logo" src="/static/logo.png"></image>
     <view class="text-area">
-      <navigator url="/pages/index/menu">
+      <!-- <navigator url="/pages/index/menu">
+        <button
+          size="default"
+          type="default"
+          style="
+            color: #ffffff;
+            background-color: #1aad19;
+            border-color: #1aad19;
+          "
+          hover-class="is-hover"
+        >
+          菜单
+        </button>
+      </navigator> -->
+
+      <navigator url="/pages/menu/menu">
         <button
           size="default"
           type="default"
@@ -17,7 +32,7 @@
         </button>
       </navigator>
 
-      <navigator url="/pages/menu/menu">
+      <navigator url="/pages/vip/vip?name=hello&age=25">
         <button
           size="default"
           type="default"
@@ -28,22 +43,7 @@
           "
           hover-class="is-hover"
         >
-          新菜单
-        </button>
-      </navigator>
-
-      <navigator url="/pages/index/confirm">
-        <button
-          size="default"
-          type="default"
-          style="
-            color: #ffffff;
-            background-color: #1aad19;
-            border-color: #1aad19;
-          "
-          hover-class="is-hover"
-        >
-          确认订单
+          测试页
         </button>
       </navigator>
     </view>
