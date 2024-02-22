@@ -3,14 +3,14 @@
     <image
       class="pic"
       mode="aspectFit"
-      :src="options.pic"
+      :src="option.pic"
     ></image>
     <view class="main">
-      <view class="title">{{ options.name }}</view>
-      <view class="description">{{ options.description }}</view>
+      <view class="title">{{ option.name }}</view>
+      <view class="description">{{ option.description }}</view>
       <view class="amount">
-        <text class="real-amount">{{ options.price }}</text>
-        <text class="init-amount">{{ options.originPrice }}</text>
+        <text class="real-amount">{{ option.price }}</text>
+        <text class="init-amount">{{ option.originPrice }}</text>
       </view>
     </view>
 
@@ -20,17 +20,21 @@
 <script setup>
 import { ref } from "vue";
 
-const options = ref({
-  name: "可乐",
-  description: "清凉一夏，身轻预约",
-  price: 5,
-  originPrice: 10,
-  pic: 'http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png'
-});
+const props = defineProps({
+  option: {
+    id: Number,
+    name: String,
+    description: String,
+    price: Number,
+    originPrice: Number,
+    pic: String
+  }
+})
+
 
 const emit = defineEmits(['onAddTap'])
 const onAddTap = () => {
-  emit('onAddTap', options.value)
+  emit('onAddTap', props.option)
 }
 
 </script>

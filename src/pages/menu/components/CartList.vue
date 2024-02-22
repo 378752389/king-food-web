@@ -8,16 +8,19 @@
     </view>
 
     <view class="list">
-      <view class="item" v-for="cart in cartList">
+      <view class="item" :key="cart.name" v-for="cart in cartStore.cartList">
         <view class="left">
           <image class="pic" :src="cart.pic"></image>
         </view>
         <view class="right">
           <text class="name">{{ cart.name }}</text>
           <view class="detail">
-            <view class="detail-item" v-for="item in cart.productList">{{
-              "x" + item.count + " " + item.name
-            }}</view>
+            <view
+              class="detail-item"
+              :key="item.name"
+              v-for="item in cart.productList"
+              >{{ "x" + item.count + " " + item.name }}</view
+            >
           </view>
           <view class="summary">
             <view class="price">￥{{ cart.price }}</view>
@@ -52,68 +55,28 @@
 import { ref } from "vue";
 import { useCartStore } from "../../../store/cart";
 
-const cartList = ref([
-  {
-    name: "芝士猪柳帕尼尼三件套",
-    pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-    price: 20,
-    stock: 1,
-    productList: [
-      {
-        name: "芝士猪柳帕尼尼",
-        count: 1,
-      },
-      {
-        name: "薯饼",
-        count: 1,
-      },
-      {
-        name: "中杯美式",
-        count: 1,
-      },
-    ],
-  },
-  {
-    name: "芝士猪柳帕尼尼三件套",
-    pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-    price: 20,
-    stock: 1,
-    productList: [
-      {
-        name: "芝士猪柳帕尼尼",
-        count: 1,
-      },
-      {
-        name: "薯饼",
-        count: 1,
-      },
-      {
-        name: "中杯美式",
-        count: 1,
-      },
-    ],
-  },
-  {
-    name: "芝士猪柳帕尼尼三件套",
-    pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-    price: 20,
-    stock: 1,
-    productList: [
-      {
-        name: "芝士猪柳帕尼尼",
-        count: 1,
-      },
-      {
-        name: "薯饼",
-        count: 1,
-      },
-      {
-        name: "中杯美式",
-        count: 1,
-      },
-    ],
-  },
-]);
+// const cartList = ref([
+//   {
+//     name: "芝士猪柳帕尼尼三件套",
+//     pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+//     price: 20,
+//     stock: 1,
+//     productList: [
+//       {
+//         name: "芝士猪柳帕尼尼",
+//         count: 1,
+//       },
+//       {
+//         name: "薯饼",
+//         count: 1,
+//       },
+//       {
+//         name: "中杯美式",
+//         count: 1,
+//       },
+//     ],
+//   },
+// ]);
 
 const onClearCartTap = () => {
   cartStore.clearCartList();
@@ -126,14 +89,16 @@ const onClearCartTap = () => {
 const cartStore = useCartStore();
 
 const onSubStockTap = (cart) => {
-
+  cartStore.removeCartItem(cart);
 };
 
-const onAddStockTap = (cart) => {};
+const onAddStockTap = (cart) => {
+  cartStore.addCartItem(cart);
+};
 
 const onBuyClick = () => {
-  // todo 
-}
+  // todo
+};
 </script>
 <style lang="scss" scoped>
 .cart-list {
@@ -141,6 +106,7 @@ const onBuyClick = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 20rpx 10rpx 50rpx;
 
     .title {
       font-size: 20px;
@@ -154,6 +120,7 @@ const onBuyClick = () => {
 
   .list {
     .item {
+      margin-bottom: 20rpx;
       display: flex;
       .left {
         .pic {

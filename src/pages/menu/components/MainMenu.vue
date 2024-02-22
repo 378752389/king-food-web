@@ -16,8 +16,8 @@
         :key="group.id"
         v-for="(group, index) in menuList"
       >
-        <view class="item" :key="item" v-for="item in 3">
-          <card-item @onAddTap="onAddTap"></card-item>
+        <view class="item" :key="item.id" v-for="item in group.list">
+          <card-item :option="item" @onAddTap="onAddTap"></card-item>
         </view>
       </view>
     </view>
@@ -53,28 +53,62 @@ import { onReady } from "@dcloudio/uni-app";
 import { useCartStore } from "../../../store/cart";
 const { safeAreaInsets } = uni.getSystemInfoSync();
 
+const cartItemOption = ref({
+  id: 1,
+  name: "可乐",
+  description: "清凉一夏，身轻预约",
+  price: 5,
+  originPrice: 10,
+  pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+});
+
 const menuList = ref([
   {
     id: 1,
     name: "汉堡",
+    list: [
+      {
+        id: 1,
+        name: "汉堡",
+        description: "分量足",
+        price: 5,
+        originPrice: 10,
+        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+      },
+    ],
   },
-  { id: 2, name: "零食小吃1" },
-  { id: 3, name: "饮料1" },
-  { id: 14, name: "汉堡1" },
-  { id: 15, name: "零食小吃2" },
-  { id: 16, name: "饮料2" },
-  { id: 17, name: "汉堡2" },
-  { id: 18, name: "零食小吃3" },
-  { id: 19, name: "饮料3" },
-  { id: 21, name: "汉堡3" },
-  { id: 22, name: "零食小吃4" },
-  { id: 23, name: "饮料4" },
-  { id: 24, name: "汉堡4" },
+  {
+    id: 2,
+    name: "零食小吃",
+    list: [
+      {
+        id: 2,
+        name: "奥尔良鸡翅根",
+        description: "美味",
+        price: 5,
+        originPrice: 10,
+        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "饮料",
+    list: [
+      {
+        id: 5,
+        name: "可乐",
+        description: "清凉一夏，身轻预约",
+        price: 5,
+        originPrice: 10,
+        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+      },
+    ],
+  },
 ]);
 
 const { proxy } = getCurrentInstance();
 
-const offset = ref();
 const relativeOffsets = ref([]);
 onReady(() => {
   // 计算每个 group 距离顶部偏离， 利于后面跳转
@@ -93,12 +127,19 @@ onReady(() => {
     .exec();
 
   // 子组件监听页面滚动 变化
+  let timer = null;
   uni.$on("onPageScroll", (scrollTop) => {
-    const index = relativeOffsets.value.findIndex((x) => x > scrollTop);
-    currentMenuIndex.value = index - 1 >= 0 ? index - 1 : 0;
-  });
+    // 防抖，滚动监听
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      const index = relativeOffsets.value.findIndex((x) => x >= scrollTop);
+      currentMenuIndex.value = index >= 0 ? index : 0;
 
-  console.log("安全距离", safeAreaInsets.bottom);
+      clearTimeout(timer);
+    }, 100);
+  });
 });
 
 const currentMenuIndex = ref(0);
@@ -106,9 +147,9 @@ const currentMenuIndex = ref(0);
 // 菜单点击跳转
 const onMenuTap = (index) => {
   // 确保不会滚动后更新选中索引
-  setTimeout(() => {
-    currentMenuIndex.value = index;
-  }, 500);
+  // setTimeout(() => {
+  //   currentMenuIndex.value = index;
+  // }, 500);
   const targetOffset = relativeOffsets.value[index];
   // 滚动到预设的指定位置
   uni.pageScrollTo({ scrollTop: targetOffset });
@@ -131,8 +172,14 @@ const onBuyClick = () => {
 
 const popup = ref();
 const onCartListClick = () => {
-  console.log("点击购物车");
-  popup.value.open("bottom");
+  if (cartStore.cartList && cartStore.cartList.length === 0) {
+    uni.showToast({
+      title: "还未添加商品到购物车~",
+      icon: "none",
+    });
+  } else {
+    popup.value.open("bottom");
+  }
 };
 </script>
 
@@ -162,7 +209,8 @@ const onCartListClick = () => {
 
   .item-group-list {
     flex: 1;
-    padding-bottom: 300rpx;
+    // padding-bottom: 300rpx;
+    padding-bottom: 90vh;
     // border: 1px solid;
     .item-group {
       margin-bottom: 50rpx;

@@ -31,8 +31,8 @@ const mockLoadCartList = () => {
 }
 onReady(() => {
   // 加载购物车列表
-  const cartList = mockLoadCartList();
-  cartStore.setCartList(cartList);
+  // const cartList = mockLoadCartList();
+  // cartStore.setCartList(cartList);
 })
 </script>
 
