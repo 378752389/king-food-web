@@ -36,11 +36,18 @@
       <button class="opt-btn" @click="onBuyClick">选好了</button>
     </view>
 
+    <!-- 普通弹窗 -->
+    <uni-popup ref="popup" background-color="#fff">
+      <view class="popup-content">
+        <cart-list></cart-list>
+      </view>
+    </uni-popup>
   </view>
 </template>
 
 <script setup>
 import { CardItem } from "./CardItem.vue";
+import { CartList } from "./CartList.vue";
 import { ref, getCurrentInstance } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { useCartStore } from "../../../store/cart";
@@ -51,20 +58,18 @@ const menuList = ref([
     id: 1,
     name: "汉堡",
   },
-  { id: 2, name: "零食小吃" },
-  { id: 3, name: "饮料" },
-  { id: 14, name: "汉堡" },
-  { id: 15, name: "零食小吃" },
-  { id: 16, name: "饮料" },
-  { id: 17, name: "汉堡" },
-  { id: 18, name: "零食小吃" },
-  { id: 19, name: "饮料" },
-  { id: 21, name: "汉堡" },
-  { id: 22, name: "零食小吃" },
-  { id: 23, name: "饮料" },
-  { id: 24, name: "汉堡" },
-  { id: 25, name: "零食小吃" },
-  { id: 26, name: "饮料" },
+  { id: 2, name: "零食小吃1" },
+  { id: 3, name: "饮料1" },
+  { id: 14, name: "汉堡1" },
+  { id: 15, name: "零食小吃2" },
+  { id: 16, name: "饮料2" },
+  { id: 17, name: "汉堡2" },
+  { id: 18, name: "零食小吃3" },
+  { id: 19, name: "饮料3" },
+  { id: 21, name: "汉堡3" },
+  { id: 22, name: "零食小吃4" },
+  { id: 23, name: "饮料4" },
+  { id: 24, name: "汉堡4" },
 ]);
 
 const { proxy } = getCurrentInstance();
@@ -124,9 +129,10 @@ const onBuyClick = () => {
   console.log(cartStore.cartList);
 };
 
-
+const popup = ref();
 const onCartListClick = () => {
   console.log("点击购物车");
+  popup.value.open("bottom");
 };
 </script>
 
