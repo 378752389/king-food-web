@@ -32,7 +32,7 @@
         display: 'flex',
       }"
     >
-      <button class="opt-btn" @click="onCartListClick">购物车</button>
+      <button class="opt-btn" @click="onCartListClick">购物车({{ cartCount }})</button>
       <button class="opt-btn" @click="onBuyClick">选好了</button>
     </view>
 
@@ -48,19 +48,14 @@
 <script setup>
 import { CardItem } from "./CardItem.vue";
 import { CartList } from "./CartList.vue";
-import { ref, getCurrentInstance } from "vue";
+import { ref, getCurrentInstance, computed } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { useCartStore } from "../../../store/cart";
 const { safeAreaInsets } = uni.getSystemInfoSync();
 
-const cartItemOption = ref({
-  id: 1,
-  name: "可乐",
-  description: "清凉一夏，身轻预约",
-  price: 5,
-  originPrice: 10,
-  pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-});
+const cartCount = computed(() => {
+  return cartStore.cartList.reduce((pre, x) => pre + x.stock, 0)
+})
 
 const menuList = ref([
   {
@@ -74,6 +69,12 @@ const menuList = ref([
         price: 5,
         originPrice: 10,
         pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+        productList: [
+          {
+            name: "汉堡",
+            count: 1,
+          }
+        ]
       },
     ],
   },
@@ -88,6 +89,12 @@ const menuList = ref([
         price: 5,
         originPrice: 10,
         pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+        productList: [
+          {
+            name: "炸鸡",
+            count: 2,
+          }
+        ]
       },
     ],
   },
@@ -102,6 +109,12 @@ const menuList = ref([
         price: 5,
         originPrice: 10,
         pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+        productList: [
+          {
+            name: "可乐",
+            count: 1,
+          }
+        ]
       },
     ],
   },
@@ -167,7 +180,16 @@ const onAddTap = (options) => {
 };
 
 const onBuyClick = () => {
-  console.log(cartStore.cartList);
+  if (cartStore.cartList && cartStore.cartList.length > 0) {
+    uni.navigateTo({
+      url: "/pages/order/confirm",
+    });
+  } else {
+    uni.showToast({
+      title: '请先选择商品',
+      icon: 'none'
+    })
+  }
 };
 
 const popup = ref();

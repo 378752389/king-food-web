@@ -57,6 +57,13 @@
 			}
 		},
 		{
+			"path": "pages/order/confirm",
+			"style": {
+				"navigationBarTitleText": "新确认订单",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/menu/menu",
 			"style": {
 				"navigationBarTitleText": "菜单"

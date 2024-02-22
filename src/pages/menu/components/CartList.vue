@@ -98,6 +98,9 @@ const onAddStockTap = (cart) => {
 
 const onBuyClick = () => {
   // todo
+  uni.navigateTo({
+    url: "/pages/order/confirm",
+  });
 };
 </script>
 <style lang="scss" scoped>
