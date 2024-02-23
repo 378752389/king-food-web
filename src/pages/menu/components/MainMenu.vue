@@ -23,17 +23,19 @@
     </view>
 
     <view
+      class="btn-group"
       :style="{
         position: 'fixed',
         bottom: 0,
         width: '100%',
         height: 50 + safeAreaInsets.bottom + 'px',
-        background: 'white',
         display: 'flex',
       }"
     >
-      <button class="opt-btn" @click="onCartListClick">购物车({{ cartCount }})</button>
-      <button class="opt-btn" @click="onBuyClick">选好了</button>
+      <button class="opt-btn cart-btn" @click="onCartListClick">
+        购物车({{ cartCount }})
+      </button>
+      <button class="opt-btn confirm-btn" @click="onBuyClick">选好了</button>
     </view>
 
     <!-- 普通弹窗 -->
@@ -54,8 +56,8 @@ import { useCartStore } from "../../../store/cart";
 const { safeAreaInsets } = uni.getSystemInfoSync();
 
 const cartCount = computed(() => {
-  return cartStore.cartList.reduce((pre, x) => pre + x.stock, 0)
-})
+  return cartStore.cartList.reduce((pre, x) => pre + x.stock, 0);
+});
 
 const menuList = ref([
   {
@@ -73,8 +75,30 @@ const menuList = ref([
           {
             name: "汉堡",
             count: 1,
-          }
-        ]
+          },
+        ],
+      },
+      {
+        id: 11,
+        name: "香辣鸡腿堡套餐",
+        description: "分量足",
+        price: 20,
+        originPrice: 10,
+        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+        productList: [
+          {
+            name: "香辣鸡腿堡",
+            count: 1,
+          },
+          {
+            name: "可乐",
+            count: 1,
+          },
+          {
+            name: "薯条",
+            count: 1,
+          },
+        ],
       },
     ],
   },
@@ -93,8 +117,8 @@ const menuList = ref([
           {
             name: "炸鸡",
             count: 2,
-          }
-        ]
+          },
+        ],
       },
     ],
   },
@@ -113,8 +137,8 @@ const menuList = ref([
           {
             name: "可乐",
             count: 1,
-          }
-        ]
+          },
+        ],
       },
     ],
   },
@@ -148,8 +172,13 @@ onReady(() => {
     }
     timer = setTimeout(() => {
       const index = relativeOffsets.value.findIndex((x) => x >= scrollTop);
-      currentMenuIndex.value = index >= 0 ? index : 0;
-
+      if (index === -1) {
+        const len = relativeOffsets.value.length;
+        currentMenuIndex.value =
+          scrollTop > relativeOffsets.value[len - 1] ? len - 1 : 0;
+      } else {
+        currentMenuIndex.value = index;
+      }
       clearTimeout(timer);
     }, 100);
   });
@@ -186,9 +215,9 @@ const onBuyClick = () => {
     });
   } else {
     uni.showToast({
-      title: '请先选择商品',
-      icon: 'none'
-    })
+      title: "请先选择商品",
+      icon: "none",
+    });
   }
 };
 
@@ -210,13 +239,13 @@ const onCartListClick = () => {
   display: flex;
 
   .menu-list {
+    padding-top: 20rpx;
     width: 200rpx;
     height: 80vh;
     position: sticky;
     top: 0;
 
     .menu {
-      border: 1px solid;
       height: 100rpx;
 
       display: flex;
@@ -225,28 +254,47 @@ const onCartListClick = () => {
     }
 
     .active {
-      color: red;
+      color: white;
+      background-color: rgba(255, 0, 0, 0.8);
     }
   }
 
   .item-group-list {
     flex: 1;
-    // padding-bottom: 300rpx;
-    padding-bottom: 90vh;
+    padding-bottom: 80vh;
     // border: 1px solid;
     .item-group {
       margin-bottom: 50rpx;
+      padding: 20rpx 0;
       // border: 1px solid;
       .item {
         margin: 0 20rpx 20rpx;
-        border: 1px solid;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20rpx;
         height: 200rpx;
       }
     }
   }
 
-  .opt-btn {
-    flex: 1;
+  .btn-group {
+    background-color: transparent;
+    // 给背景设置模糊效果
+    backdrop-filter: blur(5rpx);
+
+    .opt-btn {
+      margin: 0 20rpx;
+      background-color: red;
+      color: white;
+      height: 100rpx;
+    }
+
+    .cart-btn {
+      flex: 1;
+    }
+
+    .confirm-btn {
+      width: 200rpx;
+    }
   }
 }
 </style>
