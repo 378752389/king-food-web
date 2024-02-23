@@ -1,6 +1,6 @@
 import { useMemberStore } from "../store/member";
 
-const baseURL = "/api";
+const baseURL = "http://localhost:8081";
 
 const httpInterceptor = {
   invoke(options) {
@@ -15,7 +15,7 @@ const httpInterceptor = {
     }
     // 设置请求超时时间
     if (!options.timeout) {
-      options.timeout = 10000;
+      options.timeout = 3000;
     }
 
     // 自定义请求头
@@ -31,7 +31,7 @@ const httpInterceptor = {
       options.header["X-Custom-Token"] = token;
     }
 
-    console.log(options);
+    console.log("options", options);
   },
 
   complete() {
@@ -43,25 +43,16 @@ const httpInterceptor = {
 uni.addInterceptor("request", httpInterceptor);
 uni.addInterceptor("uploadFile", httpInterceptor);
 
-// 响应结果拦截，只返回data字段
-uni.addInterceptor({
-  returnValue(args) {
-    // 只返回 data 字段
-    if (args && args.data) {
-      return args.data;
-    }
-    return args;
-  },
-});
-
 export const request = (options) => {
   return new Promise((resolve, reject) => {
     uni.request({
       ...options,
       success(res) {
         if (res.statusCode >= 200 && res.statusCode <= 300) {
-          resolve(res);
-        } else if (res.statusCode === 400) {
+          // 正常结果返回
+          resolve(res.data);
+        } else if (res.statusCode === 401) {
+          // 业务处理，登录过期
           const memberStore = useMemberStore();
           memberStore.clearInfo();
           uni.navigateTo({
@@ -73,7 +64,7 @@ export const request = (options) => {
       fail(err) {
         uni.showToast({
           icon: "none",
-          title: "网路错误",
+          title: "网络错误",
         });
         reject(err);
       },

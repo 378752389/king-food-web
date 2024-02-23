@@ -64,6 +64,13 @@
 			}
 		},
 		{
+			"path": "pages/order/result",
+			"style": {
+				"navigationBarTitleText": "订单支付回调",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/menu/menu",
 			"style": {
 				"navigationBarTitleText": "菜单"

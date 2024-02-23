@@ -5,7 +5,9 @@
         <view>
           <view class="shop-info">
             <view class="name">{{ shopInfo.name }}</view>
-            <view>{{ shopInfo.distance }}<uni-icons type="location-filled" /></view>
+            <view
+              >{{ shopInfo.distance }}<uni-icons type="location-filled"
+            /></view>
           </view>
           <view class="meal-way">
             <view
@@ -47,7 +49,10 @@
             <template #body>
               <view class="package-detail">
                 <view class="title">{{ cart.name }}</view>
-                <view class="content" :key="product.id" v-for="product in cart.productList"
+                <view
+                  class="content"
+                  :key="product.id"
+                  v-for="product in cart.productList"
                   >x{{ product.count }} {{ product.name }}</view
                 >
               </view>
@@ -102,7 +107,7 @@
       :style="{ paddingBottom: safeAreaInsets.bottom + 'px' }"
     >
       <view class="amount"> 合计: ￥{{ 99.99 }} </view>
-      <view class="order-btn">提交订单</view>
+      <view class="order-btn" @tap="onPayOrderTap">提交订单</view>
     </view>
   </view>
 </template>
@@ -114,20 +119,46 @@ const { safeAreaInsets } = uni.getSystemInfoSync();
 const cartStore = useCartStore();
 
 const shopInfo = ref({
-  name: '和平白港城店',
-  distance: '1.1km',
-})
+  name: "和平白港城店",
+  distance: "1.1km",
+});
 
 const mealWay = ref(1);
 
 const onTapMeal = (n) => {
   mealWay.value = n;
 };
+
+const onPayOrderTap = () => {
+  uni.getProvider({
+    service:'oauth',
+    success: (res) => {
+        console.log(res)
+    }
+  })
+
+
+
+  // 微信支付
+  // uni.requestPayment({
+  //   provider: "wxpay",
+  //   timeStamp: String(Date.now()),
+  //   nonceStr: "A1B2C3D4E5",
+  //   package: "prepay_id=wx20180101abcdefg",
+  //   signType: "MD5",
+  //   paySign: "",
+  //   success(res) {
+  //     console.log(res);
+  //   },
+  //   fail(e) {
+  //     console.log(e);
+  //   },
+  // });
+};
 </script>
 
 <style lang="less" scoped>
 .confirm-order {
-
   padding-bottom: 100rpx;
   .shop-info {
     display: flex;
