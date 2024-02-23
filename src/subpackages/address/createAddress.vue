@@ -126,6 +126,7 @@ page {
   background-color: #f7f7f7;
 
   .create-address {
+    padding-top: 50rpx;
     width: 94%;
     margin: auto;
 

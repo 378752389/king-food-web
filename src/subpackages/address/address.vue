@@ -16,8 +16,8 @@
 
             <view class="contact">
               <view class="receiver">{{ item.receiver }}</view>
-              <view class="phone">{{ item.phone }}</view>
-              <view><text v-if="item.default" class="default">默认</text></view>
+              <view class="phone">{{ item.phone }}  </view>
+              <text v-if="item.default" class="default">默认</text>
             </view>
           </view>
           <view class="right">
@@ -29,7 +29,10 @@
       </uni-swipe-action-item>
     </uni-swipe-action>
 
-    <view>
+    <view
+      class="op-area"
+      :style="{ paddingBottom: safeAreaInsets.bottom + 'px' }"
+    >
       <button
         class="add-address"
         :is-shadow="false"
@@ -160,7 +163,8 @@ const deleteAddress = (item) => {
       padding: 10rpx 0;
 
       .left {
-        line-height: 1.5;
+        line-height: 2;
+        text-indent: 1rem;
         .address-info {
           color: rgba(0, 0, 0, 0.5);
           font-size: 0.8rem;
@@ -180,7 +184,7 @@ const deleteAddress = (item) => {
           }
 
           .default {
-            margin-left: 10rpx;
+            margin-left: 6rpx;
             font-size: 0.9rem;
             background-color: rgba(255, 0, 0, 0.7);
             color: white;
@@ -201,15 +205,16 @@ const deleteAddress = (item) => {
     }
   }
 
-  .add-address {
-    width: 90%;
-
+  .op-area {
     position: fixed;
-    left: 5%;
+    width: 100%;
     bottom: 0;
 
-    color: white;
-    background-color: red;
+    .add-address {
+      height: 100rpx;
+      color: white;
+      background-color: red;
+    }
   }
 }
 </style>

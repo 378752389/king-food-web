@@ -10,7 +10,7 @@
       </view>
 
       <view class="system">
-        <navigator url="/subpackages/settings/settings">
+        <navigator hover-class="none" url="/subpackages/settings/settings">
           <view class="setting"
             ><text class="iconfont icon-settings"></text
           ></view>
