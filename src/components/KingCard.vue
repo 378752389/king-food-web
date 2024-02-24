@@ -1,10 +1,22 @@
 <template>
   <view class="king-card">
-    <image class="pic" :src="item.pic"></image>
+    <image class="pic" :src="option.pic"></image>
     <view class="content">这是一段简短的描述</view>
   </view>
 </template>
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+const props = defineProps({
+  option: {
+    type: Object,
+    default: {},
+  },
+});
+
+onMounted(() => {
+  console.log(props.option)
+})
+</script>
 <style lang="scss" scoped>
 .item {
   width: 200px;

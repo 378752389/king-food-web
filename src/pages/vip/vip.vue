@@ -24,6 +24,9 @@
     </button>
 
     <water-fall>
+      <template #default="scope">
+        <KingCard :option="scope.item"></KingCard>
+      </template>
     </water-fall>
   </view>
 </template>
@@ -34,15 +37,14 @@ import { onReady } from "@dcloudio/uni-app";
 import { currentTimeAPI, wxMinLoginAPI } from "../../api/login";
 import { useLocation } from "@/uses/location";
 import WaterFall from "../../components/WaterFall.vue";
-import KingCard from '@/components/KingCard';
+import KingCard from "@/components/KingCard";
 // 页面传参
 const props = defineProps({
   name: String,
   age: Number,
 });
 
-onReady(() => {
-});
+onReady(() => {});
 
 const onGetuserinfo = (info) => {
   uni.requestPayment({
