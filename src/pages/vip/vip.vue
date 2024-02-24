@@ -23,7 +23,8 @@
       获取用户信息
     </button>
 
-    <text>{{ location }}</text>
+    <water-fall>
+    </water-fall>
   </view>
 </template>
 
@@ -32,6 +33,8 @@ import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { currentTimeAPI, wxMinLoginAPI } from "../../api/login";
 import { useLocation } from "@/uses/location";
+import WaterFall from "../../components/WaterFall.vue";
+import KingCard from '@/components/KingCard';
 // 页面传参
 const props = defineProps({
   name: String,
@@ -39,8 +42,6 @@ const props = defineProps({
 });
 
 onReady(() => {
-  const { longitude, latitude } = useLocation();
-  console.log(longitude, latitude);
 });
 
 const onGetuserinfo = (info) => {

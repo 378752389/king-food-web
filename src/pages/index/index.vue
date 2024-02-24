@@ -2,15 +2,32 @@
   <view class="content">
     <view class="title">King Menu</view>
     <view class="btn-area">
-      <button class="king-primary-btn btn-item" size="default" type="default" @click="onMenuClick">菜单</button>
-      <button class="king-primary-btn btn-item" size="default" type="default" @click="onTestClick">测试页</button>
+      <button
+        class="king-primary-btn btn-item"
+        size="default"
+        type="default"
+        @click="onMenuClick"
+      >
+        菜单
+      </button>
+      <button
+        class="king-primary-btn btn-item"
+        size="default"
+        type="default"
+        @click="onTestClick"
+      >
+        测试页
+      </button>
     </view>
+
+    <recommend></recommend>
   </view>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
+import Recommend from "@/components/recommend/index";
 
 const title = ref("Hello, World!");
 onReady(() => {
@@ -21,16 +38,15 @@ onReady(() => {
 
 const onMenuClick = () => {
   uni.navigateTo({
-    url: '/pages/menu/menu'
-  })
-}
+    url: "/pages/menu/menu",
+  });
+};
 
 const onTestClick = () => {
   uni.navigateTo({
-    url: '/pages/vip/vip?name=hello&age=25'
-  })
-}
-
+    url: "/pages/vip/vip?name=hello&age=25",
+  });
+};
 </script>
 
 <style lang="scss" scoped>
