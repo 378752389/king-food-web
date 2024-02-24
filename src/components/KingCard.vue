@@ -5,7 +5,6 @@
   </view>
 </template>
 <script setup>
-import { onMounted } from "vue";
 const props = defineProps({
   option: {
     type: Object,
@@ -13,9 +12,6 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  console.log(props.option)
-})
 </script>
 <style lang="scss" scoped>
 .item {

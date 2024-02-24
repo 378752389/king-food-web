@@ -7,8 +7,8 @@
       :style="{
         width: width + 'px',
         overflow: 'hidden',
-        left: positionOffsets[index].left + 'px',
-        top: positionOffsets[index].top + 'px',
+        left: positionOffsets[index]?.left + 'px',
+        top: positionOffsets[index]?.top + 'px',
       }"
     >
       <slot :item="item"></slot>
@@ -22,6 +22,7 @@ import { onReady } from "@dcloudio/uni-app";
 /**
  * gap: 上下元素之间间隙, 单位px
  * width: 元素宽度，单位px
+ * itemList: 定义容器内每个项目的信息
  */
 const props = defineProps({
   gap: {
@@ -32,28 +33,21 @@ const props = defineProps({
     type: Number,
     default: 200,
   },
+  itemList: {
+    type: Array,
+    default: [],
+  },
 });
-
-const generatePics = (n) => {
-  let tmp = [];
-  for (let i = 1; i <= n; i++) {
-    tmp.push({
-      id: i,
-      pic: `https://picsum.photos/200/300?id=${i}`,
-    });
-  }
-  return tmp;
-};
-
-const itemList = ref([]);
+// 容器内每个项目的偏移信息 {left:xx, top: xx}
 const positionOffsets = ref([]);
+// 容器的高度
 const containerHeight = ref(0);
+// 获取当前组件实例
+const { proxy } = getCurrentInstance();
 
 onReady(() => {
-  console.log(props.option);
-  let n = 9;
-  itemList.value = generatePics(n);
-  let tmp = new Array(n);
+  // 初始化项目偏移信息，确保模板渲染不会报错
+  let tmp = new Array(props.itemList.length);
   tmp.fill({});
   positionOffsets.value = tmp;
 
@@ -62,14 +56,13 @@ onReady(() => {
   });
 });
 
-const { proxy } = getCurrentInstance();
-// 计算当前瀑布流拥有几列元素
 const calcColumns = () => {
   uni
     .createSelectorQuery()
     .in(proxy)
     .select(".water-fall")
     .boundingClientRect((rect) => {
+      // 获取当前容器宽度
       const containerWidth = rect.width;
 
       uni
@@ -78,7 +71,7 @@ const calcColumns = () => {
         .selectAll(".item")
         .boundingClientRect()
         .exec(function (rects) {
-          // 获取每个元素的宽度和高度
+          // 获取每个项目的宽度和高度
           setPositions(containerWidth, props.width, props.gap, rects[0]);
         });
     })
@@ -87,7 +80,9 @@ const calcColumns = () => {
 
 // 计算当前容器包含的列数和每列之间的间隙
 const calc = (containerWidth, itemWidth) => {
+  // 容器内项目的列数
   let columns = Math.floor(containerWidth / itemWidth);
+  // 项目之间的间隔
   let space = (containerWidth - columns * itemWidth) / (columns + 1);
   return {
     columns,
@@ -95,6 +90,7 @@ const calc = (containerWidth, itemWidth) => {
   };
 };
 
+// 计算每个项目的偏移信息
 const setPositions = (containerWidth, itemWidth, gap, itemInfoList) => {
   let info = calc(containerWidth, itemWidth);
 
@@ -105,14 +101,16 @@ const setPositions = (containerWidth, itemWidth, gap, itemInfoList) => {
   arr.fill(0);
 
   let offsets = [];
-  const itemLen = itemList.value.length;
+  const itemLen = props.itemList.length;
   for (let i = 0; i < itemLen; i++) {
     let itemInfo = itemInfoList[i];
     let minTop = Math.min.apply(null, arr);
     let minIndex = arr.indexOf(minTop);
 
     let res = {
+      // 项目左偏移
       left: minIndex * itemWidth + space * (minIndex + 1),
+      /// 项目顶偏移
       top: minTop + gap,
     };
     offsets.push(res);
@@ -120,6 +118,7 @@ const setPositions = (containerWidth, itemWidth, gap, itemInfoList) => {
   }
 
   positionOffsets.value = offsets;
+  // 设置父容器高度为当前项目列中最高列的高度
   containerHeight.value = Math.max.apply(null, arr) + gap;
 };
 </script>

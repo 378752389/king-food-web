@@ -27,7 +27,7 @@
 <script setup>
 import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
-import Recommend from "@/components/recommend/index";
+import Recommend from "@/components/Recommend";
 
 const title = ref("Hello, World!");
 onReady(() => {
