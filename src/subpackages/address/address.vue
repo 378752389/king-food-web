@@ -17,7 +17,7 @@
             <view class="contact">
               <view class="receiver">{{ item.receiver }}</view>
               <view class="phone">{{ item.phone }}  </view>
-              <text v-if="item.default" class="default">默认</text>
+              <uni-tag class="default" v-if="item.default" :inverted="true" text="默认" type="error" />
             </view>
           </view>
           <view class="right">
@@ -171,23 +171,18 @@ const deleteAddress = (item) => {
         }
 
         .contact {
-          display: flex;
-          align-items: center;
-
           .receiver {
-            flex: 1;
+            float: left;
+            width: 150rpx;
           }
 
           .phone {
-            flex: 1;
+            float: left;
             color: rgba(0, 0, 0, 0.7);
           }
 
           .default {
-            margin-left: 6rpx;
-            font-size: 0.9rem;
-            background-color: rgba(255, 0, 0, 0.7);
-            color: white;
+            float: left;
           }
         }
       }

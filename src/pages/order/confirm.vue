@@ -22,7 +22,8 @@
             </view>
 
             <view
-              :class="['meal-way-item', 'disable', { active: mealWay === 2 }]"
+              @tap="onTapMeal(2)"
+              :class="['meal-way-item', { active: mealWay === 2 }]"
             >
               <image class="meal-way-pic" src="/static/logo.png"></image>
               <view>
@@ -131,13 +132,11 @@ const onTapMeal = (n) => {
 
 const onPayOrderTap = () => {
   uni.getProvider({
-    service:'oauth',
+    service: "oauth",
     success: (res) => {
-        console.log(res)
-    }
-  })
-
-
+      console.log(res);
+    },
+  });
 
   // 微信支付
   // uni.requestPayment({
@@ -186,7 +185,8 @@ const onPayOrderTap = () => {
       }
 
       &.active {
-        border: 4rpx solid red;
+        border: 4rpx solid rgba(0, 0, 0, 0.1);
+        border-radius: 20rpx;
 
         &::after {
           content: "";

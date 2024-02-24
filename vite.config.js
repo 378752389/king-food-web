@@ -14,5 +14,13 @@ export default defineConfig({
 				rewrite: (path) => path.replace(/^\/api/, ""),
 			},
 		},
+	},
+	// 全局引入css处理
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: '@import "@/styles/global.scss";'
+			}
+		}
 	}
 })

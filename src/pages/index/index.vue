@@ -1,51 +1,9 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <!-- <navigator url="/pages/index/menu">
-        <button
-          size="default"
-          type="default"
-          style="
-            color: #ffffff;
-            background-color: #1aad19;
-            border-color: #1aad19;
-          "
-          hover-class="is-hover"
-        >
-          菜单
-        </button>
-      </navigator> -->
-
-      <navigator url="/pages/menu/menu">
-        <button
-          size="default"
-          type="default"
-          style="
-            color: #ffffff;
-            background-color: #1aad19;
-            border-color: #1aad19;
-          "
-          hover-class="is-hover"
-        >
-          菜单
-        </button>
-      </navigator>
-
-      <navigator url="/pages/vip/vip?name=hello&age=25">
-        <button
-          size="default"
-          type="default"
-          style="
-            color: #ffffff;
-            background-color: #1aad19;
-            border-color: #1aad19;
-          "
-          hover-class="is-hover"
-        >
-          测试页
-        </button>
-      </navigator>
+    <view class="title">King Menu</view>
+    <view class="btn-area">
+      <button class="king-primary-btn btn-item" size="default" type="default" @click="onMenuClick">菜单</button>
+      <button class="king-primary-btn btn-item" size="default" type="default" @click="onTestClick">测试页</button>
     </view>
   </view>
 </template>
@@ -61,46 +19,60 @@ onReady(() => {
   console.log("onReady");
 });
 
-const jumpMenu = () => {
+const onMenuClick = () => {
   uni.navigateTo({
-    url: "/pages/index/menu",
-  });
-};
+    url: '/pages/menu/menu'
+  })
+}
+
+const onTestClick = () => {
+  uni.navigateTo({
+    url: '/pages/vip/vip?name=hello&age=25'
+  })
+}
+
 </script>
 
-<style>
-page {
-  background-color: #f7f7f7;
-}
-.is-hover {
-  color: rgba(255, 255, 255, 0.6);
-  background-color: #179b16;
-  border-color: #179b16;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
+<style lang="scss" scoped>
 .title {
-  font-size: 36rpx;
-  color: #8f8f94;
+  text-align: center;
+  margin-top: 10vh;
+  font-size: 100rpx;
+  font-weight: bold;
+  /* 这里可以随意加样式 */
+
+  background: rgba(255, 0, 0, 0.7)
+    linear-gradient(
+      -135deg,
+      transparent 25%,
+      transparent 40%,
+      rgba(3, 194, 205, 0.3) 40%,
+      /* 这两个值是滑动条的颜色 */ rgba(99, 100, 100, 0.3) 60%,
+      /* 默认是绿色 自己更改即可 */ transparent 60%,
+      transparent
+    );
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: scratchy 3s linear infinite;
+
+  @keyframes scratchy {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 130% 0;
+    }
+  }
+}
+
+.btn-area {
+  display: flex;
+  justify-content: center;
+
+  .button-item {
+    flex: 1;
+  }
 }
 </style>

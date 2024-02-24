@@ -22,12 +22,16 @@
     >
       获取用户信息
     </button>
+
+    <text>{{ location }}</text>
   </view>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { currentTimeAPI, wxMinLoginAPI } from "../../api/login";
+import { useLocation } from "@/uses/location";
 // 页面传参
 const props = defineProps({
   name: String,
@@ -35,7 +39,8 @@ const props = defineProps({
 });
 
 onReady(() => {
-  console.log(props);
+  const { longitude, latitude } = useLocation();
+  console.log(longitude, latitude);
 });
 
 const onGetuserinfo = (info) => {
