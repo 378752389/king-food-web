@@ -1,40 +1,33 @@
 <template>
   <view class="menu">
     <advertise-list></advertise-list>
-    <main-menu></main-menu>
+    <main-menu :menu-list="menuList"></main-menu>
   </view>
 </template>
 
 <script setup>
-import MainMenu from './components/MainMenu.vue';
-import {onPageScroll, onReady} from '@dcloudio/uni-app';
-import {useCartStore} from '../../store/cart';
-import AdvertiseList from '@/pages/menu/components/AdvertiseList'
+import MainMenu from "./components/MainMenu.vue";
+import { onPageScroll, onReady } from "@dcloudio/uni-app";
+import { useCartStore } from "../../store/cart";
+import AdvertiseList from "@/pages/menu/components/AdvertiseList";
+import { getMenuAPI } from "../../api/menu";
+import { ref } from "vue";
 
 onPageScroll((data) => {
-  uni.$emit('onPageScroll', data.scrollTop)
+  uni.$emit("onPageScroll", data.scrollTop);
   // console.log(data)
-} )
+});
 
-
-const cartStore =  useCartStore()
-
-const mockLoadCartList = () => {
-  return [
-    {
-      id: 1,
-      pic: 'http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png',
-      name: '可乐',
-      price: '5',
-      originPrice: '10'
-    }
-  ]
-}
-onReady(() => {
+const cartStore = useCartStore();
+const menuList = ref([]);
+onReady(async () => {
   // 加载购物车列表
   // const cartList = mockLoadCartList();
   // cartStore.setCartList(cartList);
-})
+
+  const menu = await getMenuAPI();
+  menuList.value = menu.data;
+});
 </script>
 
 <style lang="scss" scoped></style>

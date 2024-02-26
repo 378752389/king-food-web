@@ -50,119 +50,133 @@
 <script setup>
 import { CardItem } from "./CardItem.vue";
 import { CartList } from "./CartList.vue";
-import { ref, getCurrentInstance, computed } from "vue";
+import { ref, getCurrentInstance, computed, watch } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { useCartStore } from "../../../store/cart";
 const { safeAreaInsets } = uni.getSystemInfoSync();
+
+const props = defineProps({
+  menuList: {
+    type: Array,
+    default: [
+      {
+        id: 1,
+        name: "汉堡",
+        list: [
+          {
+            id: 1,
+            name: "汉堡",
+            description: "分量足",
+            price: 5,
+            originPrice: 10,
+            pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+            productList: [
+              {
+                name: "汉堡",
+                count: 1,
+              },
+            ],
+          },
+          {
+            id: 11,
+            name: "香辣鸡腿堡套餐",
+            description: "分量足",
+            price: 20,
+            originPrice: 10,
+            pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+            productList: [
+              {
+                name: "香辣鸡腿堡",
+                count: 1,
+              },
+              {
+                name: "可乐",
+                count: 1,
+              },
+              {
+                name: "薯条",
+                count: 1,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "零食小吃",
+        list: [
+          {
+            id: 2,
+            name: "奥尔良鸡翅根",
+            description: "美味",
+            price: 5,
+            originPrice: 10,
+            pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+            productList: [
+              {
+                name: "炸鸡",
+                count: 2,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "饮料",
+        list: [
+          {
+            id: 5,
+            name: "可乐",
+            description: "清凉一夏，身轻预约",
+            price: 5,
+            originPrice: 10,
+            pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
+            productList: [
+              {
+                name: "可乐",
+                count: 1,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+});
 
 const cartCount = computed(() => {
   return cartStore.cartList.reduce((pre, x) => pre + x.stock, 0);
 });
 
-const menuList = ref([
-  {
-    id: 1,
-    name: "汉堡",
-    list: [
-      {
-        id: 1,
-        name: "汉堡",
-        description: "分量足",
-        price: 5,
-        originPrice: 10,
-        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-        productList: [
-          {
-            name: "汉堡",
-            count: 1,
-          },
-        ],
-      },
-      {
-        id: 11,
-        name: "香辣鸡腿堡套餐",
-        description: "分量足",
-        price: 20,
-        originPrice: 10,
-        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-        productList: [
-          {
-            name: "香辣鸡腿堡",
-            count: 1,
-          },
-          {
-            name: "可乐",
-            count: 1,
-          },
-          {
-            name: "薯条",
-            count: 1,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "零食小吃",
-    list: [
-      {
-        id: 2,
-        name: "奥尔良鸡翅根",
-        description: "美味",
-        price: 5,
-        originPrice: 10,
-        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-        productList: [
-          {
-            name: "炸鸡",
-            count: 2,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "饮料",
-    list: [
-      {
-        id: 5,
-        name: "可乐",
-        description: "清凉一夏，身轻预约",
-        price: 5,
-        originPrice: 10,
-        pic: "http://image.wenking.fun/king-food/food/%E5%8F%AF%E4%B9%90.png",
-        productList: [
-          {
-            name: "可乐",
-            count: 1,
-          },
-        ],
-      },
-    ],
-  },
-]);
-
 const { proxy } = getCurrentInstance();
 
 const relativeOffsets = ref([]);
-onReady(() => {
-  // 计算每个 group 距离顶部偏离， 利于后面跳转
-  uni
-    .createSelectorQuery()
-    .in(proxy)
-    .selectAll(".item-group")
-    .boundingClientRect((boxes) => {
-      const tmp = [];
-      boxes.forEach((box) => {
-        console.log(box.top);
-        tmp.push(box.top);
-      });
-      relativeOffsets.value = tmp;
-    })
-    .exec();
 
+watch(
+  () => {
+    return props.menuList;
+  },
+  (newValue, oldValue) => {
+    // 计算每个 group 距离顶部偏离， 利于后面跳转
+    console.log(props.menuList);
+    uni
+      .createSelectorQuery()
+      .in(proxy)
+      .selectAll(".item-group")
+      .boundingClientRect((boxes) => {
+        const tmp = [];
+        boxes.forEach((box) => {
+          console.log(box.top);
+          tmp.push(box.top);
+        });
+        relativeOffsets.value = tmp;
+      })
+      .exec();
+  }
+);
+
+onReady(() => {
   // 子组件监听页面滚动 变化
   let timer = null;
   uni.$on("onPageScroll", (scrollTop) => {
@@ -280,6 +294,7 @@ const onCartListClick = () => {
     background-color: transparent;
     // 给背景设置模糊效果
     backdrop-filter: blur(5rpx);
+    padding-bottom: 20rpx;
 
     .opt-btn {
       margin: 0 20rpx;

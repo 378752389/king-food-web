@@ -105,7 +105,7 @@
 
     <view
       class="sumary"
-      :style="{ paddingBottom: safeAreaInsets.bottom + 'px' }"
+      :style="{ paddingBottom: safeAreaInsets.bottom + 10 + 'px' }"
     >
       <view class="amount"> 合计: ￥{{ 99.99 }} </view>
       <view class="order-btn" @tap="onPayOrderTap">提交订单</view>

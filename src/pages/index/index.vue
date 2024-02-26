@@ -28,12 +28,12 @@
 import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import Recommend from "@/components/Recommend";
+import { getMenuAPI } from "../../api/menu";
 
 const title = ref("Hello, World!");
-onReady(() => {
-  const res = uni.getSystemInfoSync();
-  console.log(res);
-  console.log("onReady");
+onReady(async () => {
+   const res = await getMenuAPI();
+   console.log(res);
 });
 
 const onMenuClick = () => {
@@ -86,6 +86,7 @@ const onTestClick = () => {
 .btn-area {
   display: flex;
   justify-content: center;
+  margin: 100rpx 0;
 
   .button-item {
     flex: 1;
