@@ -23,6 +23,17 @@
       获取用户信息
     </button>
 
+    <button
+      size="default"
+      type="default"
+      style="color: #ffffff; background-color: #1aad19; border-color: #1aad19"
+      hover-class="is-hover"
+      open-type="getPhoneNumber"
+      @click="onMockClick"
+    >
+      模拟认证请求
+    </button>
+
     <water-fall>
       <template #default="scope">
         <KingCard :option="scope.item"></KingCard>
@@ -35,6 +46,7 @@
 import { ref } from "vue";
 import { onReady } from "@dcloudio/uni-app";
 import { currentTimeAPI, wxMinLoginAPI } from "../../api/login";
+import {nonauthAPI, authAPI} from "@/api/demo";
 import { useLocation } from "@/uses/location";
 import WaterFall from "../../components/WaterFall.vue";
 import KingCard from "@/components/KingCard";
@@ -62,6 +74,14 @@ const onGetuserinfo = (info) => {
     },
   });
 };
+
+const onMockClick = async () => {
+  const nonAuthRes = await nonauthAPI();
+  console.log(nonAuthRes)
+
+  const authRes = await authAPI();
+  console.log(authRes)
+}
 
 const onBtnClick = async () => {
   console.log(11);

@@ -19,8 +19,7 @@ const props = defineProps({
   position: absolute;
   border: 1px solid rgba(0, 0, 0, 0.1);
   .pic {
-    width: 300rpx;
-    height: 450rpx;
+    width: 100%;
   }
 }
 </style>

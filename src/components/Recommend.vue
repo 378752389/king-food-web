@@ -1,6 +1,6 @@
 <template>
   <view class="recommend">
-    <water-fall :itemList="itemList">
+    <water-fall :itemList="itemList" :width="120">
       <template #default="scope">
         <king-card :option="scope.item"></king-card>
       </template>

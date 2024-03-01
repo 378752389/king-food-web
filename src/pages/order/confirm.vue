@@ -42,7 +42,7 @@
           <uni-list-item
             class="package-item"
             :key="cart.id"
-            v-for="(cart, index) in cartStore.cartList"
+            v-for="cart in cartStore.cartList"
           >
             <template #header>
               <image class="package-pic" :src="cart.pic"></image>
@@ -68,12 +68,13 @@
       <uni-section type="line" title="价格明细">
         <uni-list>
           <uni-list-item title="商品小计">
-            <template #footer> ￥{{ 100 }} </template>
+            <template #footer> ￥{{ confirmOrder.totalAmount }} </template>
           </uni-list-item>
 
           <uni-list-item title="优惠券" link>
             <template #footer>
-              <uni-tag type="error" text="有3张可用" />
+              <uni-tag v-if="confirmOrder?.couponList.length !== 0" type="error" :text="`有${confirmOrder?.couponList?.length || 0} 张优惠券可用`" />
+              <uni-tag v-else type="error" text="没有优惠券可用" />
             </template>
           </uni-list-item>
 
@@ -84,7 +85,7 @@
           </uni-list-item>
         </uni-list>
 
-        <text>合计￥80</text>
+        <!-- <text>合计￥{{ confirmOrder.payAmount }}</text> -->
       </uni-section>
     </uni-card>
 
@@ -107,7 +108,7 @@
       class="sumary"
       :style="{ paddingBottom: safeAreaInsets.bottom + 10 + 'px' }"
     >
-      <view class="amount"> 合计: ￥{{ 99.99 }} </view>
+      <view class="amount"> 合计: ￥{{ confirmOrder.payAmount }} </view>
       <view class="order-btn" @tap="onPayOrderTap">提交订单</view>
     </view>
   </view>
@@ -116,6 +117,10 @@
 <script setup>
 import { ref } from "vue";
 import { useCartStore } from "../../store/cart";
+import { onShow } from "@dcloudio/uni-app";
+import { confirmOrderAPI } from "../../api/order";
+
+
 const { safeAreaInsets } = uni.getSystemInfoSync();
 const cartStore = useCartStore();
 
@@ -125,10 +130,25 @@ const shopInfo = ref({
 });
 
 const mealWay = ref(1);
+const confirmOrder = ref({});
 
 const onTapMeal = (n) => {
   mealWay.value = n;
 };
+
+onShow(async () => {
+  const req = cartStore.cartList.map(x => {
+    return {
+      count: x.stock,
+      pkgId: x.id
+    }
+  })
+
+  const result = await confirmOrderAPI({
+    pkgList: req
+  })
+  confirmOrder.value = result.data;
+})
 
 const onPayOrderTap = () => {
   uni.getProvider({

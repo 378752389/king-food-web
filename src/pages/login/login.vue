@@ -5,12 +5,12 @@
     </view>
 
     <view class="operate">
-      <button
-        class="login-btn"
-        open-type="getPhoneNumber"
-        @getphonenumber="onGetphonenumber"
-      >
-        手机号快捷登录
+      <button class="login-btn" open-type="getPhoneNumber" @click="onLoginClick">
+        微信登录
+      </button>
+
+      <button class="login-btn" open-type="getPhoneNumber" @click="onMockLoginClick">
+        模拟快捷登录
       </button>
     </view>
   </view>
@@ -19,16 +19,44 @@
 <script setup>
 import { onLoad } from "@dcloudio/uni-app";
 import { useMemberStore } from "@/store/member";
-
-onLoad(async () => {
-  const res = await wx.login();
-  console.log(res);
-});
+import { wxMinLoginAPI } from "@/api/login";
 
 // 获取用户手机号码
-const onGetphonenumber = (e) => {
-  // console.log(e);
+const onLoginClick = async () => {
+  // todo mock登录数据
 
+  uni.login({
+    provider: "weixin",
+    success: async (res) => {
+      const code = res.code;
+      console.log(code)
+      if (code) {
+        const loginResult = await wxMinLoginAPI(code);
+
+        if (loginResult.code === 200) {
+          // 登录成功，保存登录信息
+          const memberStore = useMemberStore();
+          memberStore.setInfo(loginResult.data);
+
+          // 弹出登录提示
+          uni.showToast({
+            title: "登录成功！",
+            duration: 500,
+          });
+
+          setTimeout(() => {
+            uni.navigateBack();
+          }, 500);
+        }
+
+      }
+    },
+  });
+};
+
+
+// 模拟快捷登录
+const onMockLoginClick = () => {
   // todo mock登录数据
   const info = {
     username: "超级好吃的柠檬炸鸡柳",

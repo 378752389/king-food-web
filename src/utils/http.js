@@ -28,7 +28,9 @@ const httpInterceptor = {
     const memberStore = useMemberStore();
     const token = memberStore.info?.token;
     if (token) {
-      options.header["X-Custom-Token"] = token;
+      options.header = {
+        "X-Custom-Token": token
+      }
     }
 
     console.log("options", options);
@@ -38,6 +40,10 @@ const httpInterceptor = {
     // 关闭加载请求
     uni.hideLoading();
   },
+  fail() {
+    // 关闭加载请求
+    uni.hideLoading();
+  }
 };
 
 uni.addInterceptor("request", httpInterceptor);
@@ -50,14 +56,18 @@ export const request = (options) => {
       success(res) {
         if (res.statusCode >= 200 && res.statusCode <= 300) {
           // 正常结果返回
-          resolve(res.data);
-        } else if (res.statusCode === 401) {
-          // 业务处理，登录过期
-          const memberStore = useMemberStore();
-          memberStore.clearInfo();
-          uni.navigateTo({
-            url: "/pages/mine/mine",
-          });
+          const data = res.data;
+          if (data.code === 200) {
+            resolve(data);
+          } else if (data.code === 401) {
+            // 业务处理，登录过期
+            const memberStore = useMemberStore();
+            memberStore.clearInfo();
+            uni.navigateTo({
+              url: "/pages/login/login"
+            })
+          }
+        } else {
           reject(res);
         }
       },
