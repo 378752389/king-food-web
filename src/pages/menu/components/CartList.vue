@@ -19,11 +19,11 @@
               class="detail-item"
               :key="item.name"
               v-for="item in cart.productList"
-              >{{ "x" + item.count + " " + item.name }}</view
+              >{{ "x" + item.productNum + " " + item.name }}</view
             >
           </view>
           <view class="summary">
-            <view class="price">￥{{ cart.price }}</view>
+            <view class="price">￥{{ cart.promotionPrice || cart.totalPrice || 0 }}</view>
             <view class="stock">
               <uni-icons @tap="onSubStockTap(cart)" type="minus" size="24" />
               <text class="sotck-count">{{ cart.stock }}</text>

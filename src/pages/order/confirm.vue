@@ -41,24 +41,28 @@
         <uni-list>
           <uni-list-item
             class="package-item"
-            :key="cart.id"
-            v-for="cart in cartStore.cartList"
+            :key="pkg.id"
+            v-for="pkg in confirmOrder.pkgList"
           >
             <template #header>
-              <image class="package-pic" :src="cart.pic"></image>
+              <image class="package-pic" :src="pkg.pic"></image>
             </template>
             <template #body>
               <view class="package-detail">
-                <view class="title">{{ cart.name }}</view>
+                <view class="title">{{ pkg.name }}</view>
                 <view
                   class="content"
                   :key="product.id"
-                  v-for="product in cart.productList"
-                  >x{{ product.count }} {{ product.name }}</view
+                  v-for="product in pkg.productList"
+                  >x{{ product.productNum }} {{ product.name }}</view
                 >
               </view>
             </template>
-            <template #footer>￥{{ cart.price }}</template>
+            <template #footer>
+              <text style="font-size: 0.8rem;">x{{ pkg.buyCount }}</text> 
+              <text style="margin-left: 20rpx; color: red;">￥{{ pkg.summaryAmount }}</text> 
+              <text style="font-size: 0.7rem; margin-left: 20rpx; text-decoration: line-through;">¥{{ pkg.totalPrice }} </text>
+            </template>
           </uni-list-item>
         </uni-list>
       </uni-section>
@@ -80,7 +84,7 @@
 
           <uni-list-item title="积分" link>
             <template #footer>
-              <uni-tag type="error" text="最高可抵扣￥10" />
+              <uni-tag type="error" :text="`最高可抵扣￥${confirmOrder.maxIntegrationReduceAmount || 0}`" />
             </template>
           </uni-list-item>
         </uni-list>
@@ -118,11 +122,14 @@
 import { ref } from "vue";
 import { useCartStore } from "../../store/cart";
 import { onShow } from "@dcloudio/uni-app";
-import { confirmOrderAPI } from "../../api/order";
+import { confirmOrderAPI, makeOrderAPI } from "../../api/order";
 
 
 const { safeAreaInsets } = uni.getSystemInfoSync();
 const cartStore = useCartStore();
+const currentCouponId = ref();
+const currentUseIntegration = ref();
+const remark = ref();
 
 const shopInfo = ref({
   name: "和平白港城店",
@@ -149,14 +156,45 @@ onShow(async () => {
   })
   confirmOrder.value = result.data;
 })
+// 45.153.130.169
 
-const onPayOrderTap = () => {
-  uni.getProvider({
-    service: "oauth",
-    success: (res) => {
-      console.log(res);
-    },
-  });
+
+const onPayOrderTap = async () => {
+
+  const pkgList = confirmOrder.value?.pkgList?.map(pkg => {
+    return {
+      pkgId: pkg.id,
+      count: pkg.buyCount
+    }
+  })
+
+  const result = await makeOrderAPI({
+    mealWay: mealWay.value,
+    couponId: currentCouponId.value,
+    integration: currentUseIntegration.value,
+    remark: remark.value,
+    pkgList: pkgList
+  })
+
+  console.log("下单结果: ", result)
+
+  uni.showToast({
+    title: "下单成功！",
+    icon: "success"
+  })
+
+  cartStore.clearCartList();
+
+  uni.reLaunch({
+    url: "/pages/order/result",
+  })
+
+  // uni.getProvider({
+  //   service: "oauth",
+  //   success: (res) => {
+  //     console.log(res);
+  //   },
+  // });
 
   // 微信支付
   // uni.requestPayment({
