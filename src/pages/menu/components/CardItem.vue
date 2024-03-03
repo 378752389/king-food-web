@@ -9,8 +9,8 @@
       <view class="title">{{ option.name }}</view>
       <view class="description">{{ option.description }}</view>
       <view class="amount">
-        <text class="real-amount">{{ option.price }}</text>
-        <text class="init-amount">{{ option.originPrice }}</text>
+        <text class="real-amount">¥{{ option.promotionPrice }}</text>
+        <text class="init-amount">¥{{ option.totalPrice }}</text>
       </view>
     </view>
 
@@ -66,6 +66,7 @@ const onAddTap = () => {
 
       .real-amount {
         color: red;
+        font-size: 1rem;
       }
 
       .init-amount {

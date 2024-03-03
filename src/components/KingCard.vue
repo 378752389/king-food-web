@@ -1,7 +1,7 @@
 <template>
   <view class="king-card">
-    <image class="pic" :src="option.pic"></image>
-    <view class="content">这是一段简短的描述</view>
+    <image class="pic" :src="option.pic" mode="aspectFit"></image>
+    <view class="content ellipsis">{{ option.text }}</view>
   </view>
 </template>
 <script setup>
@@ -21,5 +21,10 @@ const props = defineProps({
   .pic {
     width: 100%;
   }
+
+  .content {
+    font-size: 0.3rem;
+  }
+  
 }
 </style>
