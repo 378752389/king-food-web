@@ -16,7 +16,7 @@
         type="default"
         @click="onTestClick"
       >
-        测试页
+        其他
       </button>
     </view>
 
