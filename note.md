@@ -111,3 +111,48 @@ const doubleCount = useDouble(props.count);
 
 
 uniapp 中页面传参（接收上一个页面的参数）可以通过defineProps进行接收和处理
+
+
+时间动画（交互动画技巧）: 利用 动画延时，可以通过用户交互来播放动画效果
+
+```html
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .box {
+        --delay: -0s;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: red;
+        animation: goto 1s var(--delay) linear forwards paused;
+    }
+
+    @keyframes goto {
+        100% {
+            transform: translate(800px);
+        }
+    }
+
+
+</style>
+
+<body>
+    <div class="box"></div>
+
+    <input id="range" type="range" min="0" max="1" step="0.01" value="0" />
+</body>
+
+<script>
+    var box = document.querySelector(".box");
+    var range = document.querySelector("#range");
+    range.addEventListener("input", (e) => {
+        let val = range.value;
+        box.style.setProperty("--delay", `-${val}s`);
+    })
+</script>
+```
