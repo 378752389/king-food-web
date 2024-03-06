@@ -20,19 +20,23 @@
 
 前端项目`king-food-admin`地址：https://github.com/378752389/king-admin-template
 
-![展示页面二](./document/admin/pkg.png)
+![展示页面一](./document/admin/pkg.jpg)
 
-![展示页面三](./document/admin/pkg_edit.png)
+![展示页面二](./document/admin/pkg_edit.jpg)
 
-![展示页面四](./document/admin/order.png)
+![展示页面三](./document/admin/order.jpg)
+
+![展示页面四](./document/admin/order_detail.jpg)
 
 #### 前端小程序
 
 前端项目`king-food-web`地址：https://github.com/378752389/king-admin-template
 
-![mp展示页面一](./document/mp/menu.png)
+![mp展示页面一](./document/mp/menu.jpg)
 
-![mp展示页面二](./document/mp/cart.png)
+![mp展示页面二](./document/mp/cart.jpg)
+
+![mp展示页面三](./document/mp/index.jpg)
 
 
 #### 移动端技术
