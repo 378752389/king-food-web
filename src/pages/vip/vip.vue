@@ -34,11 +34,13 @@
       模拟认证请求
     </button>
 
-    <water-fall>
+    <!-- <water-fall>
       <template #default="scope">
         <KingCard :option="scope.item"></KingCard>
       </template>
-    </water-fall>
+    </water-fall> -->
+
+    <coupon-list></coupon-list>
   </view>
 </template>
 
@@ -50,6 +52,7 @@ import {nonauthAPI, authAPI} from "@/api/demo";
 import { useLocation } from "@/uses/location";
 import WaterFall from "../../components/WaterFall.vue";
 import KingCard from "@/components/KingCard";
+import CouponList from "@/pages/order/components/CouponList";
 // 页面传参
 const props = defineProps({
   name: String,

@@ -4,9 +4,9 @@
       <uni-section type="line" title="店铺信息" padding>
         <view>
           <view class="shop-info">
-            <view class="name">{{ shopInfo.name }}</view>
+            <view class="name">{{ confirmOrder?.shopInfo?.name }}</view>
             <view
-              >{{ shopInfo.distance }}<uni-icons type="location-filled"
+              >{{ confirmOrder?.shopInfo?.distance }}<uni-icons type="location-filled"
             /></view>
           </view>
           <view class="meal-way">
@@ -75,14 +75,14 @@
             <template #footer> ￥{{ confirmOrder.totalAmount }} </template>
           </uni-list-item>
 
-          <uni-list-item title="优惠券" link>
+          <uni-list-item title="优惠券" link @click="onCouponListClick">
             <template #footer>
-              <uni-tag v-if="confirmOrder?.couponList.length !== 0" type="error" :text="`有${confirmOrder?.couponList?.length || 0} 张优惠券可用`" />
+              <uni-tag v-if="confirmOrder.couponList.length !== 0" type="error" :text="`有${confirmOrder.couponList.length || 0} 张优惠券可用`" />
               <uni-tag v-else type="error" text="没有优惠券可用" />
             </template>
           </uni-list-item>
 
-          <uni-list-item title="积分" link>
+          <uni-list-item title="积分" link @click="onIntegrationDetailClick">
             <template #footer>
               <uni-tag type="error" :text="`最高可抵扣￥${confirmOrder.maxIntegrationReduceAmount || 0}`" />
             </template>
@@ -108,6 +108,16 @@
     <!-- todo 填充盒子，填充确认订单按钮的高度 -->
     <view style="height: 100rpx"></view>
 
+    <!-- 优惠券弹窗 -->
+    <uni-popup ref="couponListPopupRef" background-color="#fff">
+      <coupon-list></coupon-list>
+    </uni-popup>
+
+    <!-- 积分弹窗 -->
+    <uni-popup ref="integrationPopupRef" background-color="#fff">
+      <integration-detail></integration-detail>
+    </uni-popup>
+
     <view
       class="sumary"
       :style="{ paddingBottom: safeAreaInsets.bottom + 10 + 'px' }"
@@ -123,6 +133,8 @@ import { ref } from "vue";
 import { useCartStore } from "../../store/cart";
 import { onShow } from "@dcloudio/uni-app";
 import { confirmOrderAPI, makeOrderAPI } from "../../api/order";
+import CouponList from "@/pages/order/components/CouponList";
+import IntegrationDetail from "@/pages/order/components/IntegrationDetail";
 
 
 const { safeAreaInsets } = uni.getSystemInfoSync();
@@ -130,11 +142,6 @@ const cartStore = useCartStore();
 const currentCouponId = ref();
 const currentUseIntegration = ref();
 const remark = ref();
-
-const shopInfo = ref({
-  name: "和平白港城店",
-  distance: "1.1km",
-});
 
 const mealWay = ref(1);
 const confirmOrder = ref({});
@@ -188,30 +195,18 @@ const onPayOrderTap = async () => {
   uni.reLaunch({
     url: "/pages/order/result",
   })
-
-  // uni.getProvider({
-  //   service: "oauth",
-  //   success: (res) => {
-  //     console.log(res);
-  //   },
-  // });
-
-  // 微信支付
-  // uni.requestPayment({
-  //   provider: "wxpay",
-  //   timeStamp: String(Date.now()),
-  //   nonceStr: "A1B2C3D4E5",
-  //   package: "prepay_id=wx20180101abcdefg",
-  //   signType: "MD5",
-  //   paySign: "",
-  //   success(res) {
-  //     console.log(res);
-  //   },
-  //   fail(e) {
-  //     console.log(e);
-  //   },
-  // });
 };
+
+
+const couponListPopupRef = ref();
+const onCouponListClick = () => {
+  couponListPopupRef.value.open('bottom');
+}
+
+const integrationPopupRef = ref();
+const onIntegrationDetailClick = () => {
+  integrationPopupRef.value.open('bottom');
+}
 </script>
 
 <style lang="less" scoped>
@@ -313,6 +308,10 @@ const onPayOrderTap = async () => {
       width: 200rpx;
       height: 100rpx;
     }
+  }
+
+  .coupon-list {
+    height: 500rpx;
   }
 }
 </style>
